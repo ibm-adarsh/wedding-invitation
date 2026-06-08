@@ -13,6 +13,7 @@ const themeIcon = document.getElementById('theme-icon');
 
 const YT_VIDEO_ID = '3qpxJEp4Ec4';
 const YT_START_SECONDS = 40;
+const isCoarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
 // ============================================
 // INVITATION OPENING
@@ -30,14 +31,17 @@ function resetPageScroll() {
     document.body.scrollTop = 0;
 }
 
-function finishLoader({ fromUserGesture = false } = {}) {
+function finishLoader({ withMusic = false } = {}) {
     const loader = document.getElementById('invitation-loader');
     if (!loader || loader.dataset.done) return;
     loader.dataset.done = '1';
 
     resetPageScroll();
     document.body.classList.remove('loader-active');
-    startBackgroundMusic(fromUserGesture);
+
+    if (withMusic && !musicPlaying) {
+        startBackgroundMusic(true);
+    }
 
     loader.style.opacity = '0';
     setTimeout(() => {
@@ -45,39 +49,68 @@ function finishLoader({ fromUserGesture = false } = {}) {
         resetPageScroll();
         document.getElementById('main-content').style.opacity = '1';
         startAllAnimations();
-        if (!musicPlaying) {
-            startBackgroundMusic(false);
-        } else if (!fromUserGesture) {
-            attachMusicUnmuteOnInteraction();
-        }
     }, 500);
 }
 
-function skipLoader() {
-    resetPageScroll();
-    finishLoader({ fromUserGesture: true });
+function updateLoaderMusicButton() {
+    const btn = document.getElementById('open-invitation-music');
+    if (!btn) return;
+    if (ytReady) {
+        btn.disabled = false;
+        btn.textContent = '🎵 Open Invitation with Music';
+    } else {
+        btn.disabled = true;
+        btn.textContent = 'Preparing music…';
+    }
 }
 
-document.getElementById('skip-loader')?.addEventListener('click', skipLoader);
+function playMusicFromUserGesture() {
+    pendingMusicFromGesture = true;
+    musicStartRequested = true;
+    if (!ytReady || !ytPlayer?.playVideo) return false;
+    playYouTubeMusic({ muted: false });
+    stopMusicRetryLoop();
+    setTimeout(() => {
+        if (isYouTubePlaying()) setMusicPlayingState(true);
+    }, 300);
+    return true;
+}
 
-document.getElementById('invitation-loader')?.addEventListener('click', (e) => {
-    if (e.target.closest('#skip-loader')) return;
-    skipLoader();
-});
+function openInvitationWithMusic(e) {
+    e?.preventDefault();
+    e?.stopPropagation();
+    if (!playMusicFromUserGesture()) {
+        startBackgroundMusic(true);
+    }
+    finishLoader({ withMusic: false });
+}
+
+function openInvitationQuietly(e) {
+    e?.preventDefault();
+    e?.stopPropagation();
+    musicStartRequested = false;
+    stopMusicRetryLoop();
+    finishLoader({ withMusic: false });
+}
+
+document.getElementById('open-invitation-music')?.addEventListener('click', openInvitationWithMusic);
+document.getElementById('skip-loader')?.addEventListener('click', openInvitationQuietly);
 
 document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loader-active');
     resetPageScroll();
-    musicStartRequested = true;
-    pendingMusicFromGesture = false;
     initGlobalHeartClicks();
+    updateLoaderMusicButton();
     if (window.YT?.Player) initYouTubePlayer();
-    startMusicRetryLoop();
-});
 
-window.addEventListener('load', () => {
-    resetPageScroll();
-    setTimeout(finishLoader, 2800);
+    setTimeout(() => {
+        if (ytReady) return;
+        const btn = document.getElementById('open-invitation-music');
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = 'Music needs internet — use option below';
+        }
+    }, 12000);
 });
 
 // ============================================
@@ -101,20 +134,9 @@ function setExperienceMode(mode) {
     }
 }
 
-let modeSwitcherInit = false;
 function initModeSwitcher() {
-    setExperienceMode(currentMode);
-    if (modeSwitcherInit) return;
-    modeSwitcherInit = true;
-
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.addEventListener('click', () => setExperienceMode(btn.dataset.mode));
-    });
+    setExperienceMode('classic');
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    setExperienceMode(currentMode);
-});
 
 let devEffectsStarted = false;
 function initDevEffects() {
@@ -122,48 +144,6 @@ function initDevEffects() {
     devEffectsStarted = true;
     initMatrixRain();
     initDNAHelix();
-    typeCode();
-}
-
-// ============================================
-// CODE TYPING ANIMATION
-// ============================================
-const codeSnippet = `// The moment we met
-const firstMeet = new Date('2024-01-15');
-
-// Our love story
-class LoveStory {
-    constructor(person1, person2) {
-        this.doctor = person1;
-        this.engineer = person2;
-        this.compatibility = 100;
-        this.loveLevel = Infinity;
-    }
-    
-    merge() {
-        return this.doctor + this.engineer;
-        // Returns: Perfect Match! 💕
-    }
-}
-
-const ourStory = new LoveStory(
-    'Dr. Anjali Yadav ⚕️',
-    'Adarsh Kumar Yadav 💻'
-);
-
-console.log(ourStory.merge());
-// Output: "Forever Together! 💍"`;
-
-let codeIndex = 0;
-
-function typeCode() {
-    const codeElement = document.getElementById('typing-code');
-    if (!codeElement) return;
-    if (codeIndex < codeSnippet.length) {
-        codeElement.textContent = codeSnippet.substring(0, codeIndex + 1);
-        codeIndex++;
-        setTimeout(typeCode, 30);
-    }
 }
 
 // ============================================
@@ -358,13 +338,15 @@ updateCountdown();
 // ============================================
 function initParticles() {
     const canvas = document.getElementById('particles-canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
     const particles = [];
-    const particleCount = 25;
+    const particleCount = isCoarsePointer ? 8 : 25;
+    const drawConnections = !isCoarsePointer;
     
     class Particle {
         constructor() {
@@ -406,24 +388,25 @@ function initParticles() {
             particle.draw();
         });
         
-        // Connect nearby particles
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 100) {
-                    ctx.strokeStyle = `rgba(255, 215, 0, ${1 - distance / 100})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
+        if (drawConnections) {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(255, 215, 0, ${1 - distance / 100})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
                 }
             }
         }
-        
+
         requestAnimationFrame(animateParticles);
     }
     
@@ -462,7 +445,7 @@ function initYouTubePlayer() {
         events: {
             onReady: () => {
                 ytReady = true;
-                attemptBackgroundMusic();
+                updateLoaderMusicButton();
             },
             onStateChange: (event) => {
                 if (event.data === YT.PlayerState.PLAYING && musicStartRequested && !musicPlaying) {
@@ -868,12 +851,14 @@ const observer = new IntersectionObserver((entries) => {
 function startAllAnimations() {
     initModeSwitcher();
     initECG();
-    initParticles();
-    initCursorTrail();
+    if (!isCoarsePointer) {
+        initParticles();
+        initCursorTrail();
+        initCardTilt();
+    }
     initScrollProgress();
     initFloatingNav();
     initProfileCardFlip();
-    initCardTilt();
     initStoryTimeline();
     initMilestoneTooltips();
     initCalendarButtons();
@@ -933,20 +918,18 @@ window.addEventListener('resize', () => {
     const matrixCanvas = document.getElementById('matrix-canvas');
     const dnaCanvas = document.getElementById('dna-canvas');
     const particlesCanvas = document.getElementById('particles-canvas');
-    
-    matrixCanvas.width = window.innerWidth;
-    matrixCanvas.height = window.innerHeight;
-    dnaCanvas.width = window.innerWidth;
-    dnaCanvas.height = window.innerHeight;
-    particlesCanvas.width = window.innerWidth;
-    particlesCanvas.height = window.innerHeight;
-});
+
+    [matrixCanvas, dnaCanvas, particlesCanvas].forEach((canvas) => {
+        if (!canvas) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+}, { passive: true });
 
 // ============================================
 // CONSOLE EASTER EGG
 // ============================================
 console.log('%c🪔 Anjali & Adarsh — Wedding Invitation', 'font-size: 22px; color: #8B1538; font-weight: bold;');
-console.log('%cSwitch views with 🪔 Classic · ⚕️ Doctor · 💻 Developer (bottom-right)', 'font-size: 13px; color: #C9A227;');
 // ============================================
 // HINDU RITUAL BACKGROUND ANIMATION
 // ============================================
@@ -1028,15 +1011,29 @@ function initScrollProgress() {
 // ============================================
 // FLOATING NAVIGATION
 // ============================================
+function closeFloatingNav() {
+    const nav = document.getElementById('floating-nav');
+    const toggle = document.getElementById('nav-toggle');
+    nav?.classList.remove('open');
+    toggle?.classList.remove('active');
+}
+
 function initFloatingNav() {
     const nav = document.getElementById('floating-nav');
     const toggle = document.getElementById('nav-toggle');
     const links = document.getElementById('nav-links');
     if (!nav || !toggle) return;
 
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         nav.classList.toggle('open');
         toggle.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (nav.classList.contains('open') && !nav.contains(e.target)) {
+            closeFloatingNav();
+        }
     });
 
     links?.querySelectorAll('a').forEach(link => {
@@ -1046,8 +1043,7 @@ function initFloatingNav() {
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-            nav.classList.remove('open');
-            toggle.classList.remove('active');
+            closeFloatingNav();
         });
     });
 
@@ -1055,6 +1051,10 @@ function initFloatingNav() {
     const navLinks = links?.querySelectorAll('a') || [];
 
     window.addEventListener('scroll', () => {
+        if (nav.classList.contains('open')) {
+            closeFloatingNav();
+        }
+
         let current = '';
         sections.forEach(id => {
             const section = document.getElementById(id);
@@ -1066,7 +1066,7 @@ function initFloatingNav() {
             link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
         });
 
-        if (window.scrollY > 300) {
+        if (window.scrollY > 280) {
             nav.classList.add('visible');
         } else {
             nav.classList.remove('visible');
@@ -1598,16 +1598,6 @@ function initHeroInteractions() {
     document.getElementById('scroll-hint')?.addEventListener('click', () => {
         document.getElementById('couple-section')?.scrollIntoView({ behavior: 'smooth' });
     });
-
-    const codeEditor = document.getElementById('code-editor');
-    if (codeEditor) {
-        codeEditor.addEventListener('mouseenter', () => {
-            codeEditor.classList.add('glow');
-        });
-        codeEditor.addEventListener('mouseleave', () => {
-            codeEditor.classList.remove('glow');
-        });
-    }
 }
 
 // ============================================

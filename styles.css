@@ -12,6 +12,17 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+section[id],
+.blessings-wall-section {
+    scroll-margin-top: calc(64px + env(safe-area-inset-top, 0px));
+}
+
 :root {
     --saffron: #E8850C;
     --maroon: #8B1538;
@@ -39,6 +50,8 @@ body {
     overflow-x: hidden;
     line-height: 1.6;
     position: relative;
+    padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+    -webkit-tap-highlight-color: transparent;
 }
 
 body.dark-mode {
@@ -260,7 +273,40 @@ body.loader-active {
 .loader-sub {
     color: rgba(255, 240, 232, 0.7);
     font-size: 0.95rem;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+}
+
+.loader-open-music {
+    display: block;
+    margin: 0 auto 14px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--gold), #e8c547);
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    color: #3d1525;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 28px rgba(255, 215, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+    animation: fadeIn 1s ease-out 0.8s both;
+}
+
+.loader-open-music:hover:not(:disabled),
+.loader-open-music:focus-visible:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 215, 0, 0.45);
+    outline: none;
+}
+
+.loader-open-music:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    background: rgba(255, 215, 0, 0.35);
+    color: rgba(255, 240, 232, 0.9);
+    box-shadow: none;
 }
 
 /* Traditional invitation card */
@@ -555,32 +601,6 @@ body.loader-active {
     50% { transform: scale(1.12) rotate(8deg); }
 }
 
-/* Mode switcher */
-.mode-switcher {
-    display: flex;
-    background: var(--card-bg);
-    border-radius: 30px;
-    padding: 4px;
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(201, 162, 39, 0.3);
-}
-.mode-btn {
-    width: 44px;
-    height: 44px;
-    border: none;
-    background: transparent;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.6;
-}
-.mode-btn:hover { opacity: 1; transform: scale(1.1); }
-.mode-btn.active {
-    background: linear-gradient(135deg, var(--maroon), var(--gold));
-    opacity: 1;
-    box-shadow: 0 3px 12px rgba(139, 21, 56, 0.3);
-}
 /* ============================================
    HINDU RITUAL BACKGROUND ANIMATION
    ============================================ */
@@ -1083,62 +1103,6 @@ body.loader-active {
     animation-delay: 0.9s;
 }
 
-.code-editor {
-    width: 100%;
-    max-width: 800px;
-    background: #1e1e1e;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 40px;
-    box-shadow: var(--shadow);
-    animation: slideInDown 1s ease-out;
-}
-
-.editor-header {
-    background: #323232;
-    padding: 10px;
-}
-
-.editor-tabs {
-    display: flex;
-    gap: 5px;
-}
-
-.tab {
-    padding: 8px 16px;
-    background: #1e1e1e;
-    border-radius: 5px 5px 0 0;
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    color: #999;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.tab.active {
-    background: #2d2d2d;
-    color: #00ff88;
-}
-
-.editor-body {
-    padding: 20px;
-    background: #2d2d2d;
-    min-height: 300px;
-}
-
-.code-block {
-    margin: 0;
-    font-family: 'Fira Code', monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #d4d4d4;
-}
-
-.code-block code {
-    display: block;
-    white-space: pre-wrap;
-}
-
 .hero-title {
     margin-top: 40px;
 }
@@ -1342,6 +1306,7 @@ body.loader-active {
     width: 100%;
     margin: 0;
     padding: 12px 14px;
+    min-height: 44px;
     font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.5;
@@ -2301,19 +2266,6 @@ body.loader-active {
     margin-top: 10px;
 }
 
-.tech-footer {
-    margin-top: 40px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.tech-footer code {
-    font-family: 'Fira Code', monospace;
-    color: var(--secondary-color);
-    font-size: 0.9rem;
-    line-height: 1.8;
-}
-
 /* ============================================
    FOOTER
    ============================================ */
@@ -2326,35 +2278,35 @@ footer {
     color: var(--text-secondary);
 }
 
-.footer-tech {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.9rem;
-    margin-top: 10px;
-    opacity: 0.7;
-}
-
 /* ============================================
    FLOATING ACTION BUTTONS
    ============================================ */
 .fab-container {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    left: max(12px, env(safe-area-inset-left));
+    bottom: max(14px, env(safe-area-inset-bottom));
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
     z-index: 1000;
 }
 
 .fab {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: none;
-    font-size: 1.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 1.1rem;
+    line-height: 1;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .music-fab {
@@ -2365,8 +2317,10 @@ footer {
     background: linear-gradient(135deg, var(--maroon), var(--deep-red));
 }
 
-.fab:hover {
-    transform: scale(1.1) rotate(10deg);
+.fab:hover,
+.fab:focus-visible {
+    transform: scale(1.06);
+    outline: none;
 }
 
 /* ============================================
@@ -2422,102 +2376,318 @@ footer {
 }
 
 @media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .container {
+        padding: 12px 16px 24px;
+    }
+
+    .invitation-loader {
+        padding: 24px 20px;
+        padding-top: max(24px, env(safe-area-inset-top));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    .loader-ganesha {
+        width: 120px;
+        height: 120px;
+    }
+
+    .loader-text {
+        font-size: 2rem;
+    }
+
+    .loader-sub {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        padding: 0 8px;
+    }
+
+    .loader-open-music {
+        width: min(100%, 300px);
+        min-height: 48px;
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+
+    .skip-loader {
+        min-height: 44px;
+        padding: 10px 18px;
+    }
+
+    .spiritual-opening {
+        min-height: auto;
+        padding: 48px 16px 56px;
+    }
+
+    .om-symbol-main {
+        font-size: 3.2rem;
+    }
+
+    .ganesha-photo {
+        width: 140px;
+        height: 140px;
+    }
+
+    .ganesha-frame {
+        padding: 14px;
+    }
+
+    .sanskrit-text {
+        font-size: 1.5rem;
+    }
+
+    .sanskrit-shloka {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .shloka-container {
+        padding: 20px 16px;
+    }
+
+    .hero-section {
+        min-height: auto;
+        padding: 40px 12px 48px;
+    }
+
+    .invitation-card {
+        padding: 32px 18px;
+        border-width: 2px;
+    }
+
+    .invitation-line {
+        font-size: 0.98rem;
+        line-height: 1.7;
+    }
+
+    .invitation-line.hindi {
+        font-size: 1.05rem;
+    }
+
     .section-title-traditional {
-        font-size: 1.65rem;
+        font-size: 1.55rem;
         gap: 8px;
     }
 
     .section-header {
-        margin-bottom: 36px;
+        margin-bottom: 32px;
+        padding: 0 8px;
+    }
+
+    .section-subtitle {
+        font-size: 0.92rem;
+    }
+
+    .couple-section,
+    .rituals-section,
+    .events-section,
+    .venue-section,
+    .rsvp-section,
+    .blessings-wall-section,
+    .divine-blessings-section,
+    .closing-section {
+        padding: 48px 16px;
     }
 
     .bride-name, .groom-name {
-        font-size: 1.75rem;
+        font-size: 1.65rem;
     }
 
     .name {
-        font-size: 1.45rem;
+        font-size: 1.4rem;
+    }
+
+    .merge-visualization {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 40px;
+    }
+
+    .merge-icon {
+        order: 0;
+        padding: 8px 0;
+    }
+
+    .heart-large {
+        font-size: 2.75rem;
+    }
+
+    .couple-card {
+        padding: 24px 18px;
+    }
+
+    .profile-card {
+        padding: 24px 18px;
+    }
+
+    .love-story-box {
+        padding: 24px 18px;
+        margin: 24px auto;
+    }
+
+    .story-timeline {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        gap: 8px;
+        margin: 20px -4px 16px;
+        padding: 4px 4px 10px;
+    }
+
+    .story-milestone {
+        flex: 0 0 auto;
+        scroll-snap-align: center;
+        min-width: 108px;
+        padding: 10px 14px;
+        min-height: 44px;
+    }
+
+    .milestone-text {
+        font-size: 0.78rem;
+        text-align: center;
+    }
+
+    .hero-date-badge {
+        padding: 16px 20px;
+        margin: 20px 0 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .date-label {
+        font-size: 1.15rem;
+    }
+
+    .scroll-hint {
+        width: 100%;
+        max-width: 280px;
+        min-height: 48px;
+        margin-top: 24px;
+        padding: 14px 20px;
+        touch-action: manipulation;
     }
 
     .glitch {
         font-size: 2.5rem;
     }
-    
+
     .subtitle {
         font-size: 1.2rem;
     }
-    
+
     .date-main {
-        font-size: 2rem;
+        font-size: 1.85rem;
     }
-    
+
     .countdown-timer {
-        gap: 10px;
+        gap: 8px;
     }
-    
+
     .timer-box {
-        min-width: 80px;
-        padding: 20px 15px;
+        min-width: 68px;
+        padding: 14px 10px;
+        flex: 1;
     }
-    
+
     .timer-value {
-        font-size: 2rem;
+        font-size: 1.65rem;
     }
-    
+
+    .timer-label {
+        font-size: 0.65rem;
+    }
+
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.65rem;
         flex-direction: column;
         gap: 10px;
     }
-    
-    .profile-card {
-        padding: 30px 20px;
+
+    .event-card {
+        padding: 22px 18px;
     }
-    
+
+    .event-header h3 {
+        font-size: 1.15rem;
+    }
+
+    .venue-card {
+        padding: 22px 18px;
+    }
+
+    .map-button {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+    }
+
     .stats {
         flex-direction: column;
         gap: 10px;
     }
-    
+
+    .rsvp-container {
+        padding: 32px 18px;
+        border-radius: 16px;
+    }
+
+    .rsvp-stats {
+        gap: 12px;
+    }
+
+    .stat-box {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+    }
+
     .contact-methods {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
     }
-    
+
     .contact-btn {
+        width: 100%;
         justify-content: center;
-    }
-    
-    .fab-container {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .fab {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
+        min-height: 48px;
+        padding: 14px 20px;
+        font-size: 1rem;
+        touch-action: manipulation;
     }
 
-    .floating-nav {
-        top: 15px;
-        right: 15px;
+    .contact-info {
+        gap: 16px;
     }
 
-    .story-timeline {
-        gap: 5px;
+    .blessing-input-group {
+        padding: 20px 16px;
     }
 
-    .story-milestone {
-        padding: 8px 12px;
+    .blessing-input-group input,
+    .blessing-input-group textarea {
+        font-size: 16px;
+        padding: 14px;
+        margin-bottom: 12px;
     }
 
-    .milestone-text {
-        font-size: 0.75rem;
+    .submit-blessing-btn {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .emoji-btn {
+        min-width: 44px;
+        min-height: 44px;
     }
 
     .blessings-wall {
-        gap: 16px;
+        gap: 14px;
     }
 
     .blessing-card {
@@ -2525,24 +2695,121 @@ footer {
         max-width: 100%;
     }
 
+    .fab-container {
+        left: max(10px, env(safe-area-inset-left));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        gap: 8px;
+    }
+
+    .fab {
+        width: 40px;
+        height: 40px;
+        font-size: 1.05rem;
+    }
+
+    .floating-nav {
+        top: max(12px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
+    }
+
+    .nav-toggle {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
     .modal-content {
-        padding: 30px 20px;
+        padding: 28px 18px;
+        margin: 16px;
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
     }
 
     .elegant-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    .closing-content {
+        padding: 32px 18px;
+    }
+
+    .quote {
+        font-size: 1.15rem;
+        line-height: 1.65;
+    }
+
+    footer {
+        padding: 32px 16px 16px;
+    }
+}
+
+@media (max-width: 390px) {
+    .loader-text {
+        font-size: 1.75rem;
+    }
+
+    .bride-name, .groom-name {
+        font-size: 1.45rem;
+    }
+
+    .and-symbol {
+        font-size: 1.4rem;
+    }
+
+    .timer-box {
+        min-width: 60px;
+        padding: 12px 6px;
+    }
+
+    .timer-value {
+        font-size: 1.45rem;
+    }
+
+    .section-title-traditional {
+        font-size: 1.4rem;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    #cursor-canvas,
+    #particles-canvas {
+        display: none !important;
+    }
+
+    .couple-chip:active,
+    .contact-btn:active,
+    .fab:active,
+    .loader-open-music:active:not(:disabled),
+    .scroll-hint:active,
+    .story-milestone:active {
+        transform: scale(0.98);
+    }
+
+    .event-card:hover,
+    .venue-card:hover,
+    .profile-card:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .invitation-loader {
+        transition: opacity 0.2s ease;
     }
 }
 
 @media (max-width: 480px) {
-    .code-editor {
-        font-size: 12px;
-    }
-    
-    .editor-body {
-        padding: 15px;
-    }
-    
     .date-container,
     .rsvp-container,
     .closing-content {
@@ -2753,11 +3020,11 @@ footer {
 }
 
 .nav-toggle {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -2792,16 +3059,17 @@ footer {
 
 .nav-links {
     list-style: none;
-    background: rgba(15, 12, 41, 0.95);
+    background: rgba(44, 24, 16, 0.96);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 15px;
-    padding: 15px;
+    padding: 10px;
     margin-top: 10px;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: all 0.4s ease;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(201, 162, 39, 0.35);
 }
 
 .floating-nav.open .nav-links {
@@ -2815,19 +3083,21 @@ footer {
 
 .nav-links a {
     display: block;
-    padding: 10px 20px;
-    color: rgba(255, 255, 255, 0.8);
+    padding: 12px 16px;
+    min-height: 44px;
+    color: rgba(255, 248, 237, 0.9);
     text-decoration: none;
     border-radius: 10px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+    font-size: 0.95rem;
+    transition: background 0.2s ease, color 0.2s ease;
+    line-height: 1.35;
 }
 
 .nav-links a:hover,
-.nav-links a.active {
-    background: linear-gradient(135deg, rgba(255, 0, 136, 0.3), rgba(0, 255, 136, 0.3));
-    color: white;
+.nav-links a.active,
+.nav-links a:active {
+    background: rgba(139, 21, 56, 0.45);
+    color: #fff;
 }
 
 /* ============================================
@@ -2835,33 +3105,24 @@ footer {
    ============================================ */
 .skip-loader {
     display: block;
-    margin: 15px auto 20px;
-    padding: 8px 24px;
+    margin: 0 auto 20px;
+    padding: 8px 18px;
     background: transparent;
-    border: 1px solid rgba(0, 255, 136, 0.4);
-    color: #00ff88;
+    border: none;
+    color: rgba(255, 240, 232, 0.55);
     border-radius: 20px;
     cursor: pointer;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.25s ease;
 }
 
-.skip-loader:hover {
-    background: rgba(0, 255, 136, 0.1);
-    border-color: #00ff88;
-}
-
-/* ============================================
-   CODE EDITOR ENHANCEMENTS
-   ============================================ */
-.code-cursor {
-    animation: blink 1s infinite;
-    color: var(--secondary-color);
-}
-
-.code-editor.glow {
-    box-shadow: 0 0 40px rgba(0, 255, 136, 0.3), var(--shadow);
+.skip-loader:hover,
+.skip-loader:focus-visible {
+    color: rgba(255, 240, 232, 0.9);
+    outline: none;
 }
 
 .scroll-hint {
