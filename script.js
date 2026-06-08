@@ -1359,10 +1359,6 @@ function initHeroInteractions() {
     document.getElementById('hero-heart')?.addEventListener('click', () => {
         createLoveExplosion();
     });
-
-    document.getElementById('scroll-hint')?.addEventListener('click', () => {
-        document.getElementById('couple-section')?.scrollIntoView({ behavior: 'smooth' });
-    });
 }
 
 // ============================================
