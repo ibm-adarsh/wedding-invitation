@@ -7,7 +7,7 @@
     <meta name="format-detection" content="telephone=no">
     <title>Anjali & Adarsh | Wedding Invitation</title>
     <meta name="description" content="Wedding invitation of Dr. Anjali Yadav & Adarsh Kumar Yadav — 28 June 2026, Jaunpur">
-    <meta name="theme-color" content="#8B1538">
+    <meta name="theme-color" content="#5C0F28">
 
     <!-- Link previews (WhatsApp, iMessage, etc.) -->
     <meta property="og:title" content="Anjali & Adarsh | Wedding Invitation">
@@ -19,7 +19,7 @@
 
     <link rel="icon" href="assets/ganesha.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="assets/ganesha.jpg">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=royal">
     <script src="site-url.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
@@ -52,7 +52,6 @@
             <li><a href="#events-section">📋 कार्यक्रम</a></li>
             <li><a href="#venue-section">📍 स्थान</a></li>
             <li><a href="#rsvp-section">✉️ RSVP</a></li>
-            <li><a href="#blessings-wall">💌 शुभकामनाएँ</a></li>
         </ul>
     </nav>
 
@@ -523,57 +522,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-        </section>
-
-        <!-- Virtual Blessings Wall -->
-        <section class="blessings-wall-section" id="blessings-wall">
-            <div class="section-header animate-reveal">
-                <h2 class="section-title-traditional">
-                    <span class="title-ornament">💌</span>
-                    Leave Your Blessings
-                    <span class="title-ornament">💌</span>
-                </h2>
-                <p class="blessings-intro hindi">अपनी शुभकामनाएँ और आशीर्वाद साझा करें</p>
-                <p class="blessings-intro">Share your love, wishes, and blessings for the happy couple</p>
-            </div>
-            
-            <div class="blessing-form-container">
-                <div class="blessing-input-group">
-                    <input type="text" id="blessing-name" placeholder="Your name" maxlength="50">
-                    <textarea id="blessing-message" placeholder="Write your blessing or wish..." maxlength="200" rows="3"></textarea>
-                    <div class="blessing-actions">
-                        <div class="emoji-picker">
-                            <button type="button" class="emoji-btn" data-emoji="💕">💕</button>
-                            <button type="button" class="emoji-btn" data-emoji="🙏">🙏</button>
-                            <button type="button" class="emoji-btn" data-emoji="🎉">🎉</button>
-                            <button type="button" class="emoji-btn" data-emoji="✨">✨</button>
-                            <button type="button" class="emoji-btn" data-emoji="🪷">🪷</button>
-                            <button type="button" class="emoji-btn" data-emoji="💖">💖</button>
-                        </div>
-                        <button class="submit-blessing-btn" id="submit-blessing">Send Blessing ✨</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="blessings-wall" id="blessings-wall-container">
-                <!-- Default blessings only; guest messages go to private inbox -->
-            </div>
-        </section>
-
-        <!-- Owner-only blessings inbox (hidden unless ?blessings=ADMIN_KEY) -->
-        <section class="blessings-admin-section" id="blessings-admin" hidden>
-            <div class="blessings-admin-panel">
-                <div class="blessings-admin-header">
-                    <h2>🔒 Private Blessings Inbox</h2>
-                    <p>Only visible to you — guest messages from the form</p>
-                </div>
-                <div class="blessings-admin-actions">
-                    <button type="button" class="blessings-admin-btn" id="blessings-admin-refresh">Refresh</button>
-                    <button type="button" class="blessings-admin-btn" id="blessings-admin-export">Export JSON</button>
-                </div>
-                <p class="blessings-admin-status" id="blessings-admin-status"></p>
-                <div class="blessings-admin-list" id="blessings-admin-list"></div>
             </div>
         </section>
 

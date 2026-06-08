@@ -165,7 +165,7 @@ function initMatrixRain() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.fillStyle = darkMode ? '#00ff88' : 'rgba(0, 255, 136, 0.3)';
+        ctx.fillStyle = darkMode ? '#D4AF37' : 'rgba(212, 175, 55, 0.35)';
         ctx.font = fontSize + 'px monospace';
         
         for (let i = 0; i < drops.length; i++) {
@@ -201,7 +201,7 @@ function initDNAHelix() {
         const amplitude = 50;
         const frequency = 0.02;
         
-        ctx.strokeStyle = darkMode ? 'rgba(255, 0, 136, 0.3)' : 'rgba(255, 0, 136, 0.15)';
+        ctx.strokeStyle = darkMode ? 'rgba(212, 175, 55, 0.35)' : 'rgba(92, 15, 40, 0.2)';
         ctx.lineWidth = 2;
         
         // Draw left strand
@@ -213,7 +213,7 @@ function initDNAHelix() {
         ctx.stroke();
         
         // Draw right strand
-        ctx.strokeStyle = darkMode ? 'rgba(0, 255, 136, 0.3)' : 'rgba(0, 255, 136, 0.15)';
+        ctx.strokeStyle = darkMode ? 'rgba(212, 175, 55, 0.3)' : 'rgba(212, 175, 55, 0.18)';
         ctx.beginPath();
         for (let y = 0; y < canvas.height; y += 2) {
             const x = centerX - Math.sin((y + offset) * frequency) * amplitude;
@@ -256,7 +256,7 @@ function initECG() {
     
     function drawECG() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = '#ff0088';
+        ctx.strokeStyle = '#5C0F28';
         ctx.lineWidth = 2;
         ctx.beginPath();
         
@@ -355,7 +355,7 @@ function initParticles() {
             this.size = Math.random() * 3 + 1;
             this.speedX = Math.random() * 2 - 1;
             this.speedY = Math.random() * 2 - 1;
-            this.color = ['#ff0088', '#00ff88', '#ffd700'][Math.floor(Math.random() * 3)];
+            this.color = ['#5C0F28', '#D4AF37', '#E5C76B'][Math.floor(Math.random() * 3)];
         }
         
         update() {
@@ -678,7 +678,7 @@ function activateSecretMode() {
 }
 
 function createLoveExplosion() {
-    const colors = ['#ff0088', '#00ff88', '#ffd700', '#ff6b6b', '#4d96ff'];
+    const colors = ['#5C0F28', '#D4AF37', '#E5C76B', '#701A35', '#A68B1B'];
     
     for (let i = 0; i < 30; i++) {
         setTimeout(() => {
@@ -862,7 +862,6 @@ function startAllAnimations() {
     initStoryTimeline();
     initMilestoneTooltips();
     initCalendarButtons();
-    initBlessingsWall();
     initDeityCards();
     initCoupleInteractions();
     initHeroInteractions();
@@ -878,7 +877,6 @@ function startAllAnimations() {
         '.profile-card',
         '.deity-card',
         '.love-story-box',
-        '.blessings-wall-section',
         '.venue-card',
         '.rsvp-section'
     ].join(', ');
@@ -908,7 +906,6 @@ function startAllAnimations() {
         });
     });
     
-    loadBlessings();
 }
 
 // ============================================
@@ -929,7 +926,7 @@ window.addEventListener('resize', () => {
 // ============================================
 // CONSOLE EASTER EGG
 // ============================================
-console.log('%c🪔 Anjali & Adarsh — Wedding Invitation', 'font-size: 22px; color: #8B1538; font-weight: bold;');
+console.log('%c🪔 Anjali & Adarsh — Wedding Invitation', 'font-size: 22px; color: #5C0F28; font-weight: bold;');
 // ============================================
 // HINDU RITUAL BACKGROUND ANIMATION
 // ============================================
@@ -1047,7 +1044,7 @@ function initFloatingNav() {
         });
     });
 
-    const sections = ['spiritual-opening', 'hero-section', 'couple-section', 'rituals-section', 'events-section', 'venue-section', 'rsvp-section', 'blessings-wall'];
+    const sections = ['spiritual-opening', 'hero-section', 'couple-section', 'rituals-section', 'events-section', 'venue-section', 'rsvp-section'];
     const navLinks = links?.querySelectorAll('a') || [];
 
     window.addEventListener('scroll', () => {
@@ -1290,238 +1287,6 @@ document.getElementById('rsvp-modal')?.addEventListener('click', (e) => {
 });
 
 // ============================================
-// BLESSINGS WALL
-// ============================================
-function getBlessingsConfig() {
-    return window.BLESSINGS_CONFIG || { endpoint: '', adminKey: '' };
-}
-
-function isBlessingsAdmin() {
-    const cfg = getBlessingsConfig();
-    if (!cfg.adminKey) return false;
-    return new URLSearchParams(location.search).get('blessings') === cfg.adminKey;
-}
-
-const LOCAL_BLESSINGS_INBOX_KEY = 'wedding-blessings-inbox';
-
-function initBlessingsWall() {
-    document.getElementById('submit-blessing')?.addEventListener('click', submitBlessing);
-
-    document.querySelectorAll('.emoji-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const textarea = document.getElementById('blessing-message');
-            if (textarea) {
-                textarea.value += btn.dataset.emoji;
-                textarea.focus();
-            }
-        });
-    });
-
-    if (isBlessingsAdmin()) {
-        initBlessingsAdmin();
-    }
-}
-
-async function saveBlessingPrivately(blessing) {
-    const cfg = getBlessingsConfig();
-    const payload = {
-        name: blessing.name,
-        message: blessing.message,
-        timestamp: blessing.timestamp
-    };
-
-    if (cfg.endpoint) {
-        try {
-            await fetch(cfg.endpoint, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-            return { ok: true, remote: true };
-        } catch {
-            // fall through to local inbox backup
-        }
-    }
-
-    const inbox = JSON.parse(localStorage.getItem(LOCAL_BLESSINGS_INBOX_KEY) || '[]');
-    inbox.unshift(payload);
-    localStorage.setItem(LOCAL_BLESSINGS_INBOX_KEY, JSON.stringify(inbox));
-    return { ok: true, remote: false };
-}
-
-let blessingsAdminCache = [];
-
-function initBlessingsAdmin() {
-    const section = document.getElementById('blessings-admin');
-    if (!section) return;
-    section.hidden = false;
-
-    document.getElementById('blessings-admin-refresh')?.addEventListener('click', loadBlessingsAdminInbox);
-    document.getElementById('blessings-admin-export')?.addEventListener('click', exportBlessingsAdminInbox);
-    loadBlessingsAdminInbox();
-}
-
-async function loadBlessingsAdminInbox() {
-    const statusEl = document.getElementById('blessings-admin-status');
-    const listEl = document.getElementById('blessings-admin-list');
-    if (!listEl) return;
-
-    statusEl.textContent = 'Loading…';
-    const cfg = getBlessingsConfig();
-
-    if (cfg.endpoint) {
-        try {
-            const url = `${cfg.endpoint}?key=${encodeURIComponent(cfg.adminKey)}`;
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data.ok && Array.isArray(data.blessings)) {
-                blessingsAdminCache = data.blessings;
-                renderBlessingsAdminInbox(blessingsAdminCache);
-                statusEl.textContent = `${blessingsAdminCache.length} blessing(s) from Google Sheet`;
-                return;
-            }
-            statusEl.textContent = data.error || 'Could not load remote inbox';
-        } catch {
-            statusEl.textContent = 'Could not reach Google Sheet — showing local backup only';
-        }
-    }
-
-    blessingsAdminCache = JSON.parse(localStorage.getItem(LOCAL_BLESSINGS_INBOX_KEY) || '[]');
-    renderBlessingsAdminInbox(blessingsAdminCache);
-    statusEl.textContent = cfg.endpoint
-        ? `${blessingsAdminCache.length} local backup item(s)`
-        : `${blessingsAdminCache.length} item(s) — set up Google Sheet (see BLESSINGS_SETUP.md) to collect from all guests`;
-}
-
-function renderBlessingsAdminInbox(items) {
-    const listEl = document.getElementById('blessings-admin-list');
-    if (!listEl) return;
-
-    if (!items.length) {
-        listEl.innerHTML = '<p class="blessings-admin-empty">No guest blessings yet.</p>';
-        return;
-    }
-
-    listEl.innerHTML = items.map((b) => {
-        const when = b.timestamp ? new Date(b.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '';
-        return `
-            <article class="blessings-admin-item">
-                <header>
-                    <strong>${escapeHtml(b.name)}</strong>
-                    ${when ? `<time>${when}</time>` : ''}
-                </header>
-                <p>${escapeHtml(b.message)}</p>
-            </article>
-        `;
-    }).join('');
-}
-
-function exportBlessingsAdminInbox() {
-    if (!blessingsAdminCache.length) {
-        showToast('Nothing to export yet');
-        return;
-    }
-    const blob = new Blob([JSON.stringify(blessingsAdminCache, null, 2)], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `wedding-blessings-${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    URL.revokeObjectURL(link.href);
-}
-
-const BLOCKED_BLESSING_NAMES = new Set(['aaaaaa']);
-
-function isBlockedBlessing(blessing) {
-    const name = (blessing.name || '').trim().toLowerCase();
-    return BLOCKED_BLESSING_NAMES.has(name);
-}
-
-function sanitizeStoredBlessings(stored) {
-    const clean = stored.filter((b) => !isBlockedBlessing(b));
-    if (clean.length !== stored.length) {
-        localStorage.setItem('wedding-blessings', JSON.stringify(clean));
-    }
-    return clean;
-}
-
-async function submitBlessing() {
-    const name = document.getElementById('blessing-name')?.value.trim();
-    const message = document.getElementById('blessing-message')?.value.trim();
-    if (!name || !message) {
-        showToast('Please enter your name and blessing message');
-        return;
-    }
-    if (isBlockedBlessing({ name, message })) {
-        return;
-    }
-
-    const blessing = { name, message, timestamp: Date.now() };
-    const submitBtn = document.getElementById('submit-blessing');
-    if (submitBtn) submitBtn.disabled = true;
-
-    await saveBlessingPrivately(blessing);
-
-    document.getElementById('blessing-name').value = '';
-    document.getElementById('blessing-message').value = '';
-
-    if (submitBtn) submitBtn.disabled = false;
-    createLoveExplosion();
-    showToast(`Thank you, ${name}! Your blessing has been received 💕`);
-
-    if (isBlessingsAdmin()) {
-        loadBlessingsAdminInbox();
-    }
-}
-
-function loadBlessings() {
-    const container = document.getElementById('blessings-wall-container');
-    if (!container) return;
-
-    const defaultBlessings = [
-        { name: 'The Yadav Families', message: 'May your union be blessed with eternal happiness, prosperity, and divine grace 🙏💕', timestamp: 0 },
-        { name: 'Friends & Well-wishers', message: 'Wishing you a lifetime of love, laughter, and beautiful memories together! 🎉✨', timestamp: 0 },
-        { name: 'Pari', message: 'Mama Mami, Pari abhi ghar pe hai — bas wait kar rahi hai aapke paas aane ka! Shaadi ka din jaldi aaye. Bahut excited hoon, bahut saara pyaar 🌸💕', timestamp: 0 },
-        { name: 'Lucky', message: 'Mama Mami, Lucky bol raha hai ghar se! Jaldi aapke paas aana hai shaadi ke liye. Aap dono par bahut garv hai — milte hain jald hi 🎈🤗💙', timestamp: 0 }
-    ];
-
-    container.innerHTML = '';
-    defaultBlessings.forEach(b => renderBlessing(b, false));
-}
-
-function renderBlessing(blessing, animate) {
-    const container = document.getElementById('blessings-wall-container');
-    if (!container) return;
-
-    const card = document.createElement('div');
-    card.className = 'blessing-card' + (animate ? ' new-blessing' : '');
-    card.innerHTML = `
-        <div class="blessing-card-header">
-            <span class="blessing-avatar">${blessing.name.charAt(0).toUpperCase()}</span>
-            <span class="blessing-author">${escapeHtml(blessing.name)}</span>
-        </div>
-        <p class="blessing-text">${escapeHtml(blessing.message)}</p>
-        <button class="blessing-like" onclick="likeBlessing(this)">💕 <span>0</span></button>
-    `;
-    container.prepend(card);
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-function likeBlessing(btn) {
-    const count = btn.querySelector('span');
-    const current = parseInt(count.textContent);
-    if (!btn.classList.contains('liked')) {
-        count.textContent = current + 1;
-        btn.classList.add('liked');
-    }
-}
-
-// ============================================
 // DEITY CARDS INTERACTION
 // ============================================
 const deityBlessings = {
@@ -1624,7 +1389,7 @@ function initCursorTrail() {
                 y: e.clientY,
                 size: Math.random() * 4 + 2,
                 life: 1,
-                color: ['#ff0088', '#00ff88', '#ffd700'][Math.floor(Math.random() * 3)]
+                color: ['#5C0F28', '#D4AF37', '#E5C76B'][Math.floor(Math.random() * 3)]
             });
         }
     }, { passive: true });
