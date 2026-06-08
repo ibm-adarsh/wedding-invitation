@@ -1,0 +1,7 @@
+// Copy to site-url.local.js (gitignored) for private settings on a public GitHub repo.
+window.SITE_URL = 'https://YOUR-USERNAME.github.io/wedding-invitation';
+
+window.BLESSINGS_CONFIG = {
+    endpoint: 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec',
+    adminKey: 'your-long-secret-key'
+};

@@ -1,0 +1,7 @@
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+
+# Optional local overrides (copy from site-url.local.js.example)
+site-url.local.js

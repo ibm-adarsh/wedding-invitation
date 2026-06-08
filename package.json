@@ -1,0 +1,13 @@
+{
+  "name": "wedding-invitation",
+  "version": "2.0.0",
+  "description": "Wedding invitation for Anjali & Adarsh — Hindu rituals, universal design, local-first",
+  "main": "index.html",
+  "scripts": {
+    "start": "bash start.sh",
+    "dev": "bash start.sh"
+  },
+  "keywords": ["wedding", "invitation", "hindu", "local"],
+  "author": "Yadav Families",
+  "license": "MIT"
+}

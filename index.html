@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anjali & Adarsh | Wedding Invitation</title>
+    <meta name="description" content="Wedding invitation of Dr. Anjali Yadav & Adarsh Kumar Yadav — 28 June 2026, Jaunpur">
+    <meta name="theme-color" content="#8B1538">
+
+    <!-- Link previews (WhatsApp, iMessage, etc.) -->
+    <meta property="og:title" content="Anjali & Adarsh | Wedding Invitation">
+    <meta property="og:description" content="You're cordially invited to our wedding on 28 June 2026 at Laxmi Narayan Vatika, Jaunpur.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" id="meta-og-image" content="">
+    <meta property="og:url" id="meta-og-url" content="">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="assets/ganesha.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="assets/ganesha.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <script src="site-url.js"></script>
+    <script>
+        (function () {
+            var path = location.pathname.replace(/\/[^/]*$/, '/');
+            var base = (window.SITE_URL || (location.origin + path)).replace(/\/$/, '');
+            var image = base + '/assets/ganesha.jpg';
+            var page = base + '/';
+            var ogi = document.getElementById('meta-og-image');
+            var ogu = document.getElementById('meta-og-url');
+            if (ogi) ogi.setAttribute('content', image);
+            if (ogu) ogu.setAttribute('content', page);
+        })();
+    </script>
+</head>
+<body class="mode-classic" data-mode="classic">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Floating Navigation -->
+    <nav class="floating-nav" id="floating-nav">
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#spiritual-opening">🙏 आशीर्वाद</a></li>
+            <li><a href="#hero-section">💕 निमंत्रण</a></li>
+            <li><a href="#couple-section">👫 दंपति</a></li>
+            <li><a href="#rituals-section">🪔 संस्कार</a></li>
+            <li><a href="#events-section">📋 कार्यक्रम</a></li>
+            <li><a href="#venue-section">📍 स्थान</a></li>
+            <li><a href="#rsvp-section">✉️ RSVP</a></li>
+            <li><a href="#blessings-wall">💌 शुभकामनाएँ</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dev-mode backgrounds (hidden in Classic) -->
+    <canvas id="matrix-canvas" class="mode-dev-only"></canvas>
+    <canvas id="dna-canvas" class="mode-dev-only"></canvas>
+
+    <!-- Wedding Background Layers -->
+    <div class="wedding-bg" aria-hidden="true">
+        <div class="bg-pattern"></div>
+        <img src="assets/ganesha.jpg" alt="" class="bg-ganesha-watermark">
+        <div class="bg-scrim"></div>
+    </div>
+
+    <!-- Hindu Ritual Background (subtle floating elements) -->
+    <div class="ritual-background" id="ritual-background"></div>
+
+    <!-- Elegant Opening -->
+    <div id="invitation-loader" class="invitation-loader">
+        <img src="assets/ganesha.jpg" alt="Lord Ganesha" class="loader-ganesha">
+        <div class="loader-diyas">
+            <span>🪔</span><span>🪔</span><span>🪔</span>
+        </div>
+        <p class="loader-text">शुभ विवाह</p>
+        <p class="loader-sub">Opening your invitation...</p>
+        <button class="skip-loader" id="skip-loader">Skip →</button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="main-content">
+        
+        <!-- Spiritual Opening with Ganesha -->
+        <section class="spiritual-opening" id="spiritual-opening">
+            <div class="ganesha-blessing">
+                <div class="om-symbol-main">ॐ</div>
+                
+                <!-- Lord Ganesha SVG Illustration -->
+                <div class="ganesha-image-container">
+                    <div class="ganesha-frame">
+                        <img src="assets/ganesha.jpg" alt="श्री गणेश — Lord Ganesha" class="ganesha-photo">
+                    </div>
+                </div>
+                
+                <h1 class="sanskrit-text">श्री गणेशाय नमः</h1>
+                <p class="translation">Shri Ganeshaya Namah</p>
+                <div class="divine-light"></div>
+            </div>
+            <div class="shloka-container">
+                <p class="sanskrit-shloka">
+                    वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ।<br>
+                    निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥
+                </p>
+                <p class="shloka-meaning">
+                    "O Lord Ganesha, with curved trunk and massive body,<br>
+                    whose splendor equals millions of suns,<br>
+                    please remove all obstacles from our endeavors, always."
+                </p>
+            </div>
+        </section>
+
+        <!-- Hero — Traditional Wedding Invitation -->
+        <section class="hero-section" id="hero-section">
+            <div class="invitation-card animate-reveal">
+                <div class="card-ornament top">✦ 🪷 ✦</div>
+                <p class="invitation-line hindi">|| श्री गणेशाय नमः ||</p>
+                <p class="invitation-line hindi">देवी-देवताओं एवं परिवार के आशीर्वाद सहित, हम आपको सादर आमंत्रित करते हैं</p>
+                <p class="invitation-line">With the blessings of Gods, Goddesses, and our families, we joyfully invite you to celebrate the wedding of</p>
+
+                <div class="couple-names">
+                    <h1 class="bride-name">Dr. Anjali Yadav</h1>
+                    <div class="names-connector">
+                        <span class="and-symbol">&</span>
+                        <span class="heart-icon" id="hero-heart">💕</span>
+                    </div>
+                    <h1 class="groom-name">Adarsh Kumar Yadav</h1>
+                </div>
+
+                <p class="invitation-line hindi">दो परिवार, एक प्यार, अनंत आशीर्वाद</p>
+                <p class="invitation-line">Two families, one love, infinite blessings</p>
+
+                <div class="hero-date-badge">
+                    <span class="date-label">Sunday, 28th June 2026</span>
+                    <span class="date-venue">Laxmi Narayan Vatika, Jaunpur</span>
+                </div>
+
+                <!-- Dev-only code story (hidden in Classic) -->
+                <div class="code-editor mode-dev-only" id="code-editor">
+                    <div class="editor-header">
+                        <div class="editor-tabs">
+                            <span class="tab active">love_story.js</span>
+                        </div>
+                    </div>
+                    <div class="editor-body">
+                        <pre class="code-block"><code id="typing-code"></code><span class="code-cursor">|</span></pre>
+                    </div>
+                </div>
+
+                <div class="card-ornament bottom">🪷 ✦ 🪷</div>
+                <button class="scroll-hint" id="scroll-hint">
+                    <span>Scroll to explore</span>
+                    <span class="scroll-arrow">↓</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Couple Section -->
+        <section class="couple-section" id="couple-section">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">🪷</span>
+                    The Couple
+                    <span class="title-ornament">🪷</span>
+                </h2>
+                <p class="section-subtitle hindi">वर-वधू से परिचय</p>
+                <p class="section-subtitle">Meet the bride and groom</p>
+            </div>
+
+            <div class="merge-visualization">
+                <div class="branch bride-branch">
+                    <div class="profile-card couple-card bride-card" data-tilt>
+                        <p class="couple-label">Bride</p>
+                        <h2 class="name couple-tap" data-whisper="Grace, strength, and a heart full of love 💐">Dr. Anjali Yadav</h2>
+                        <div class="couple-details">
+                            <button type="button" class="couple-chip" data-whisper="Healer by calling — gentle hands, golden heart 🩺">
+                                <span class="chip-dot">🎓</span> MBBS
+                            </button>
+                            <button type="button" class="couple-chip" data-whisper="Dedicated to new life & new beginnings — at hospital & at home ✨">
+                                <span class="chip-dot">⚕️</span> MD (OBG & Gynae), GSVM PGI, Kanpur
+                            </button>
+                        </div>
+                        <button type="button" class="couple-chip couple-chip-family" data-whisper="With the love & blessings of her parents 🙏">
+                            D/o Mr. MishriLal Yadav & Mrs. Geeta Devi
+                        </button>
+                        <p class="couple-whisper" aria-live="polite"></p>
+                    </div>
+                </div>
+
+                <div class="merge-icon">
+                    <div class="heart-connector">
+                        <button type="button" class="heart-large couple-heart-btn" aria-label="Celebrate their union">💕</button>
+                        <p class="union-text">विवाह संस्कार</p>
+                        <p class="union-sub">Seven vows · One sacred bond</p>
+                    </div>
+                </div>
+
+                <div class="branch groom-branch">
+                    <div class="profile-card couple-card groom-card" data-tilt>
+                        <p class="couple-label">Groom</p>
+                        <h2 class="name couple-tap" data-whisper="Steady, kind, and full of quiet strength 🤝">Adarsh Kumar Yadav</h2>
+                        <div class="couple-details">
+                            <button type="button" class="couple-chip" data-whisper="Dreams built with focus and faith 🎓">
+                                <span class="chip-dot">💻</span> BTech
+                            </button>
+                            <button type="button" class="couple-chip" data-whisper="Crafting ideas by day — building a lifetime by heart ✨">
+                                <span class="chip-dot">🏢</span> Software Engineer — IBM
+                            </button>
+                        </div>
+                        <button type="button" class="couple-chip couple-chip-family" data-whisper="With the love & blessings of his parents 🙏">
+                            S/o Mr. Sukharaj Yadav & Mrs. Shakuntala Devi
+                        </button>
+                        <p class="couple-whisper" aria-live="polite"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Love Story -->
+            <div class="love-story-box">
+                <h3>💕 Our Journey</h3>
+                <p class="love-quote hindi">"जहाँ प्रेम है, वहाँ ईश्वर हैं"</p>
+                <p class="love-quote">Where there is love, there is divinity.</p>
+                <div class="story-timeline">
+                    <button class="story-milestone active" data-story="meet">
+                        <span class="milestone-dot"></span>
+                        <span class="milestone-text">First Meet</span>
+                    </button>
+                    <button class="story-milestone" data-story="date">
+                        <span class="milestone-dot"></span>
+                        <span class="milestone-text">Growing Closer</span>
+                    </button>
+                    <button class="story-milestone" data-story="proposal">
+                        <span class="milestone-dot"></span>
+                        <span class="milestone-text">The Proposal</span>
+                    </button>
+                    <button class="story-milestone" data-story="forever">
+                        <span class="milestone-dot"></span>
+                        <span class="milestone-text">Forever</span>
+                    </button>
+                </div>
+                <div class="story-content" id="story-content">
+                    <p class="story-text" id="story-text">Two souls met, and from the very first conversation, it felt like coming home. Different paths, one beautiful destination.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hindu Rituals Guide (for all guests) -->
+        <section class="rituals-section" id="rituals-section">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">🕉️</span>
+                    Sacred Hindu Rituals
+                    <span class="title-ornament">🕉️</span>
+                </h2>
+                <p class="section-subtitle">A glimpse of the traditions we honour</p>
+            </div>
+
+            <div class="rituals-grid">
+                <article class="ritual-card animate-reveal" style="--reveal-delay: 0.1s">
+                    <div class="ritual-icon-ring"><span class="ritual-icon">💛</span></div>
+                    <h3 class="ritual-title">Haldi</h3>
+                    <p class="ritual-hindi">हल्दी की रस्म</p>
+                    <p class="ritual-desc">Turmeric paste for purification, blessings, and a radiant glow before the wedding.</p>
+                </article>
+                <article class="ritual-card animate-reveal" style="--reveal-delay: 0.2s">
+                    <div class="ritual-icon-ring"><span class="ritual-icon">🙏</span></div>
+                    <h3 class="ritual-title">Pooja</h3>
+                    <p class="ritual-hindi">पूजा एवं प्रार्थना</p>
+                    <p class="ritual-desc">Sacred prayers to invoke divine blessings for the couple's new journey together.</p>
+                </article>
+                <article class="ritual-card animate-reveal" style="--reveal-delay: 0.3s">
+                    <div class="ritual-icon-ring"><span class="ritual-icon">🎨</span></div>
+                    <h3 class="ritual-title">Mehndi</h3>
+                    <p class="ritual-hindi">मेहँदी की रात</p>
+                    <p class="ritual-desc">An evening of henna, music, and celebration — joy and auspicious beginnings.</p>
+                </article>
+                <article class="ritual-card animate-reveal" style="--reveal-delay: 0.4s">
+                    <div class="ritual-icon-ring"><span class="ritual-icon">💍</span></div>
+                    <h3 class="ritual-title">Saat Phere</h3>
+                    <p class="ritual-hindi">सात फेरे — सात वचन</p>
+                    <p class="ritual-desc">Seven sacred rounds around the holy fire — vows of dharma, love, and togetherness.</p>
+                </article>
+            </div>
+            <div class="ritual-petals" aria-hidden="true"></div>
+        </section>
+
+        <!-- Date Section with Countdown -->
+        <section class="date-section" id="date-section">
+            <div class="date-container animate-reveal">
+                <div class="system-info">
+                    <h2>📅 Mark Your Calendar</h2>
+                    <div class="date-display">
+                        <div class="date-main">28th June 2026</div>
+                        <div class="date-sub">Sunday · Wedding at 6:00 PM</div>
+                    </div>
+                </div>
+                
+                <div class="countdown-timer">
+                    <div class="timer-box">
+                        <span class="timer-value" id="days">000</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                    <div class="timer-box">
+                        <span class="timer-value" id="hours">00</span>
+                        <span class="timer-label">Hours</span>
+                    </div>
+                    <div class="timer-box">
+                        <span class="timer-value" id="minutes">00</span>
+                        <span class="timer-label">Minutes</span>
+                    </div>
+                    <div class="timer-box">
+                        <span class="timer-value" id="seconds">00</span>
+                        <span class="timer-label">Seconds</span>
+                    </div>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-label">
+                        <span>Our Journey Together</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-milestones">
+                        <button class="milestone completed" data-milestone="meet">First Meet</button>
+                        <button class="milestone completed" data-milestone="date">First Date</button>
+                        <button class="milestone completed" data-milestone="proposal">Proposal</button>
+                        <button class="milestone active" data-milestone="wedding">Wedding</button>
+                        <button class="milestone" data-milestone="forever">Forever</button>
+                    </div>
+                    <p class="milestone-tooltip" id="milestone-tooltip">💍 The big day is almost here!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Timeline -->
+        <section class="events-section" id="events-section">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">📋</span>
+                    Celebration Schedule
+                    <span class="title-ornament">📋</span>
+                </h2>
+                <p class="section-subtitle hindi">विवाह कार्यक्रम</p>
+            </div>
+            
+            <div class="timeline">
+                <!-- Pooja -->
+                <div class="timeline-item" data-event="pooja">
+                    <div class="timeline-marker">🙏</div>
+                    <div class="timeline-content">
+                        <div class="event-card">
+                            <div class="event-header">
+                                <h3>Pooja Ceremony</h3>
+                                <span class="event-status">Day 1</span>
+                            </div>
+                            <div class="event-details">
+                                <p class="event-date">📅 26th June 2026</p>
+                                <p class="event-time">⏰ 10:00 AM Onwards</p>
+                                <p class="event-venue">🏠 <a href="https://maps.app.goo.gl/sqXq3p8eudzvBz9U7" target="_blank" rel="noopener noreferrer">Yadav Residence, Jaunpur</a></p>
+                                <p class="event-desc">Sacred rituals and prayers seeking divine blessings for the union</p>
+                            </div>
+                            <button class="add-calendar-btn" data-event="Pooja Ceremony" data-date="20260626" data-time="100000" data-location="home">📅 Add to Calendar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Haldi -->
+                <div class="timeline-item" data-event="haldi">
+                    <div class="timeline-marker">💛</div>
+                    <div class="timeline-content">
+                        <div class="event-card">
+                            <div class="event-header">
+                                <h3>Haldi Ceremony</h3>
+                                <span class="event-status">Day 1</span>
+                            </div>
+                            <div class="event-details">
+                                <p class="event-date">📅 26th June 2026</p>
+                                <p class="event-time">⏰ After 5:00 PM</p>
+                                <p class="event-venue">🏠 <a href="https://maps.app.goo.gl/sqXq3p8eudzvBz9U7" target="_blank" rel="noopener noreferrer">Yadav Residence, Jaunpur</a></p>
+                                <p class="event-desc">Traditional turmeric ceremony — blessings, laughter, and auspicious beginnings</p>
+                            </div>
+                            <button class="add-calendar-btn" data-event="Haldi Ceremony" data-date="20260626" data-time="170000" data-location="home">📅 Add to Calendar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mehndi -->
+                <div class="timeline-item" data-event="mehndi">
+                    <div class="timeline-marker">🎨</div>
+                    <div class="timeline-content">
+                        <div class="event-card">
+                            <div class="event-header">
+                                <h3>Mehndi Ceremony</h3>
+                                <span class="event-status">Day 2</span>
+                            </div>
+                            <div class="event-details">
+                                <p class="event-date">📅 27th June 2026</p>
+                                <p class="event-time">⏰ After 6:00 PM</p>
+                                <p class="event-venue">🏠 <a href="https://maps.app.goo.gl/sqXq3p8eudzvBz9U7" target="_blank" rel="noopener noreferrer">Yadav Residence, Jaunpur</a></p>
+                                <p class="event-desc">An evening of henna, music, dance, and celebration with loved ones</p>
+                            </div>
+                            <button class="add-calendar-btn" data-event="Mehndi Ceremony" data-date="20260627" data-time="180000" data-location="home">📅 Add to Calendar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wedding -->
+                <div class="timeline-item highlight" data-event="wedding">
+                    <div class="timeline-marker">💍</div>
+                    <div class="timeline-content">
+                        <div class="event-card">
+                            <div class="event-header">
+                                <h3>Wedding Ceremony</h3>
+                                <span class="event-status production">Main Event</span>
+                            </div>
+                            <div class="event-details">
+                                <p class="event-date">📅 28th June 2026</p>
+                                <p class="event-time">⏰ 6:00 PM</p>
+                                <p class="event-venue">📍 Laxmi Narayan Vatika, Jaunpur</p>
+                                <p class="event-desc">Saat Phere around the sacred fire — the holy union of two souls</p>
+                            </div>
+                            <button class="add-calendar-btn highlight-btn" data-event="Wedding Ceremony" data-date="20260628" data-time="180000" data-location="wedding">📅 Add to Calendar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue with Map -->
+        <section class="venue-section" id="venue-section">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">📍</span>
+                    Venue
+                    <span class="title-ornament">📍</span>
+                </h2>
+                <p class="section-subtitle hindi">हल्दी · पूजा · मेहँदी — यादव निवास, जौनपुर | विवाह — लक्ष्मी नारायण वाटिका, जौनपुर</p>
+            </div>
+            
+            <div class="venue-grid">
+                <div class="venue-card">
+                    <div class="venue-header">
+                        <h3>🏠 Home — Haldi, Pooja & Mehndi</h3>
+                    </div>
+                    <div class="venue-address">
+                        <p>Yadav Residence</p>
+                        <p>Jaunpur, Uttar Pradesh</p>
+                    </div>
+                    <button class="map-button map-button-home" onclick="openHomeMap()">
+                        <span>🗺️</span> Get Directions to Home
+                    </button>
+                </div>
+                <div class="venue-card venue-card-wedding">
+                    <div class="venue-header">
+                        <h3>💍 Wedding — Laxmi Narayan Vatika</h3>
+                    </div>
+                    <div class="venue-address">
+                        <p>Anjaan Shaheed Road, Shop no.14, Shahganj</p>
+                        <p>Jaunpur, Uttar Pradesh 223101</p>
+                    </div>
+                    <button class="map-button" onclick="openMap()">
+                        <span>🗺️</span> Get Directions to Venue
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-section" id="rsvp-section">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">✉️</span>
+                    Confirm Your Presence
+                    <span class="title-ornament">✉️</span>
+                </h2>
+                <p class="section-subtitle hindi">आपकी उपस्थिति सादर वांछित है</p>
+            </div>
+            
+            <div class="rsvp-container">
+                <div class="rsvp-info">
+                    <p class="rsvp-text">Please confirm your attendance by <strong>23rd June 2026</strong></p>
+                    <div class="rsvp-stats">
+                        <div class="stat-box">
+                            <span class="stat-icon">👥</span>
+                            <span class="stat-number" id="guest-count">0</span>
+                            <span class="stat-label">Guests Expected</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-icon">✅</span>
+                            <span class="stat-number" id="confirmed-count">0</span>
+                            <span class="stat-label">Confirmed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-methods">
+                    <button class="contact-btn whatsapp" onclick="sendWhatsApp()">
+                        <span class="btn-icon">📱</span>
+                        <span class="btn-text">WhatsApp RSVP</span>
+                    </button>
+                    <button class="contact-btn call" onclick="makeCall()">
+                        <span class="btn-icon">📞</span>
+                        <span class="btn-text">Call to Confirm</span>
+                    </button>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <span class="contact-label">Groom's Family</span>
+                        <span class="contact-number">+91 73988 12420</span>
+                    </div>
+                </div>
+
+                <div class="friends-note">
+                    <p class="friends-note-title">📌 A Note for Friends</p>
+                    <p class="friends-note-intro">For travel and coordination, please reach out to the contacts below:</p>
+                    <ul class="friends-note-list">
+                        <li>
+                            <strong>JNV Jaunpur family</strong> — please contact
+                            <a href="tel:+918726029820">Manish Kannaujiya</a>
+                            <span class="friends-note-phone">(+91 87260 29820)</span>
+                        </li>
+                        <li>
+                            <strong>REC Ambedkar Nagar family</strong> — please contact
+                            <a href="tel:+918738848695">Kamal Krishna Gupta</a>
+                            <span class="friends-note-phone">(+91 87388 48695)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Virtual Blessings Wall -->
+        <section class="blessings-wall-section" id="blessings-wall">
+            <div class="section-header animate-reveal">
+                <h2 class="section-title-traditional">
+                    <span class="title-ornament">💌</span>
+                    Leave Your Blessings
+                    <span class="title-ornament">💌</span>
+                </h2>
+                <p class="blessings-intro hindi">अपनी शुभकामनाएँ और आशीर्वाद साझा करें</p>
+                <p class="blessings-intro">Share your love, wishes, and blessings for the happy couple</p>
+            </div>
+            
+            <div class="blessing-form-container">
+                <div class="blessing-input-group">
+                    <input type="text" id="blessing-name" placeholder="Your name" maxlength="50">
+                    <textarea id="blessing-message" placeholder="Write your blessing or wish..." maxlength="200" rows="3"></textarea>
+                    <div class="blessing-actions">
+                        <div class="emoji-picker">
+                            <button type="button" class="emoji-btn" data-emoji="💕">💕</button>
+                            <button type="button" class="emoji-btn" data-emoji="🙏">🙏</button>
+                            <button type="button" class="emoji-btn" data-emoji="🎉">🎉</button>
+                            <button type="button" class="emoji-btn" data-emoji="✨">✨</button>
+                            <button type="button" class="emoji-btn" data-emoji="🪷">🪷</button>
+                            <button type="button" class="emoji-btn" data-emoji="💖">💖</button>
+                        </div>
+                        <button class="submit-blessing-btn" id="submit-blessing">Send Blessing ✨</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blessings-wall" id="blessings-wall-container">
+                <!-- Default blessings only; guest messages go to private inbox -->
+            </div>
+        </section>
+
+        <!-- Owner-only blessings inbox (hidden unless ?blessings=ADMIN_KEY) -->
+        <section class="blessings-admin-section" id="blessings-admin" hidden>
+            <div class="blessings-admin-panel">
+                <div class="blessings-admin-header">
+                    <h2>🔒 Private Blessings Inbox</h2>
+                    <p>Only visible to you — guest messages from the form</p>
+                </div>
+                <div class="blessings-admin-actions">
+                    <button type="button" class="blessings-admin-btn" id="blessings-admin-refresh">Refresh</button>
+                    <button type="button" class="blessings-admin-btn" id="blessings-admin-export">Export JSON</button>
+                </div>
+                <p class="blessings-admin-status" id="blessings-admin-status"></p>
+                <div class="blessings-admin-list" id="blessings-admin-list"></div>
+            </div>
+        </section>
+
+        <!-- Divine Blessings Section -->
+        <section class="divine-blessings-section">
+            <div class="blessings-container">
+                <div class="section-header animate-reveal">
+                    <h2 class="section-title-traditional">
+                        <span class="title-ornament">🙏</span>
+                        Divine Blessings
+                        <span class="title-ornament">🙏</span>
+                    </h2>
+                </div>
+                
+                <div class="gods-blessings">
+                    <div class="deity-card" data-deity="ganesha">
+                        <div class="deity-icon">🕉️</div>
+                        <h3>Lord Ganesha</h3>
+                        <p class="blessing">Remover of Obstacles</p>
+                        <p class="deity-message">Click for a blessing</p>
+                    </div>
+                    <div class="deity-card" data-deity="lakshmi">
+                        <div class="deity-icon">🪷</div>
+                        <h3>Goddess Lakshmi</h3>
+                        <p class="blessing">Prosperity & Fortune</p>
+                        <p class="deity-message">Click for a blessing</p>
+                    </div>
+                    <div class="deity-card" data-deity="shiva">
+                        <div class="deity-icon">🔱</div>
+                        <h3>Lord Shiva</h3>
+                        <p class="blessing">Eternal Bliss</p>
+                        <p class="deity-message">Click for a blessing</p>
+                    </div>
+                    <div class="deity-card" data-deity="krishna">
+                        <div class="deity-icon">🦚</div>
+                        <h3>Lord Krishna</h3>
+                        <p class="blessing">Divine Love</p>
+                        <p class="deity-message">Click for a blessing</p>
+                    </div>
+                </div>
+
+                <div class="marriage-shloka">
+                    <p class="sanskrit-verse">
+                        धन्यो ऽयं लोकः सुखदुःखयोः समत्वेन युक्तः।<br>
+                        विवाहः पुण्यकर्म, दो आत्माओं का पवित्र मिलन॥
+                    </p>
+                    <p class="verse-meaning">
+                        "Blessed is this union, balanced in joy and sorrow.<br>
+                        Marriage is a sacred act, the holy union of two souls."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Easter Egg (subtle) -->
+        <section class="easter-egg-section mode-dev-only">
+            <div class="secret-message">
+                <p>💡 <em>Dev hints: Type "love" · Konami code · Switch to Developer view</em></p>
+            </div>
+        </section>
+
+        <!-- Closing Section -->
+        <section class="closing-section">
+            <div class="closing-content">
+                <div class="spiritual-quote">
+                    <div class="om-small">ॐ</div>
+                    <p class="quote hindi">"विवाहः पुण्यकर्म — Marriage is a sacred union of two souls"</p>
+                    <p class="quote">"In each other, we found home, hope, and a lifetime of love."</p>
+                    <p class="quote-author">— Anjali & Adarsh</p>
+                    <div class="om-small">ॐ</div>
+                </div>
+                
+                <div class="blessing-text">
+                    <p class="hindi-blessing">🙏 हम आपके आशीर्वाद की कामना करते हैं 🙏</p>
+                    <p>We humbly seek your blessings as we begin this sacred journey together</p>
+                    <p>Your presence would honour us and complete our celebration</p>
+                </div>
+
+                <div class="divine-tech-blend">
+                    <div class="blend-item">
+                        <span class="icon">🕉️</span>
+                        <p>Rooted in Dharma</p>
+                    </div>
+                    <div class="blend-item mode-doctor-visible">
+                        <span class="icon">⚕️</span>
+                        <p>Healing with Compassion</p>
+                    </div>
+                    <div class="blend-item mode-dev-visible">
+                        <span class="icon">💻</span>
+                        <p>Building with Heart</p>
+                    </div>
+                    <div class="blend-item mode-classic-visible">
+                        <span class="icon">💕</span>
+                        <p>Living with Love</p>
+                    </div>
+                </div>
+
+                <div class="family-signature">
+                    <p>With love, blessings, and regards,</p>
+                    <p class="family-names">The Yadav Families</p>
+                    <p class="sanskrit-blessing">सर्वे भवन्तु सुखिनः | May all be happy</p>
+                </div>
+
+                <div class="tech-footer mode-dev-only">
+                    <code>
+                        git commit -m "Forever together with divine blessings 💕🙏"<br>
+                        // Built with love — for family, friends & fellow devs
+                    </code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>Made with 🙏 Faith, 💕 Love & ✨ Joy</p>
+                <p class="footer-tech mode-dev-only">HTML · CSS · JavaScript · Lots of Love</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <div class="mode-switcher" id="mode-switcher" title="Choose your view">
+            <button class="mode-btn active" data-mode="classic" title="Classic — Hindu wedding">🪔</button>
+            <button class="mode-btn" data-mode="doctor" title="Doctor view">⚕️</button>
+            <button class="mode-btn" data-mode="developer" title="Developer view">💻</button>
+        </div>
+        <button class="fab music-fab" onclick="toggleMusic()" title="Toggle Music">
+            <span id="music-icon">🎵</span>
+        </button>
+        <button class="fab theme-fab" onclick="toggleTheme()" title="Toggle Theme">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <!-- YouTube background music (requires internet) -->
+    <div id="youtube-player" class="youtube-player-hidden" aria-hidden="true"></div>
+
+    <!-- Particle System -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Cursor Sparkle Trail -->
+    <canvas id="cursor-canvas"></canvas>
+
+    <!-- RSVP Modal -->
+    <div class="modal-overlay" id="rsvp-modal">
+        <div class="modal-content rsvp-modal">
+            <button class="modal-close" onclick="closeRSVPModal()">&times;</button>
+            <h2>✉️ Confirm Your Presence</h2>
+            <p class="modal-subtitle">We'd love to celebrate with you!</p>
+            <form id="rsvp-form" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label for="rsvp-name">Your Name *</label>
+                    <input type="text" id="rsvp-name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-phone">Phone Number</label>
+                    <input type="tel" id="rsvp-phone" placeholder="+91 XXXXX XXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Will you attend?</label>
+                    <div class="attendance-options">
+                        <label class="attendance-option">
+                            <input type="radio" name="attendance" value="yes" required>
+                            <span class="option-card yes">🎉 Joyfully Accept</span>
+                        </label>
+                        <label class="attendance-option">
+                            <input type="radio" name="attendance" value="maybe">
+                            <span class="option-card maybe">🤔 Maybe</span>
+                        </label>
+                        <label class="attendance-option">
+                            <input type="radio" name="attendance" value="no">
+                            <span class="option-card no">😢 Regretfully Decline</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-guests">Number of Guests</label>
+                    <div class="guest-counter">
+                        <button type="button" class="counter-btn" onclick="adjustGuests(-1)">−</button>
+                        <input type="number" id="rsvp-guests" value="1" min="1" max="10" readonly>
+                        <button type="button" class="counter-btn" onclick="adjustGuests(1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-message">Message (optional)</label>
+                    <textarea id="rsvp-message" placeholder="Any dietary preferences or special notes..." rows="2"></textarea>
+                </div>
+                <button type="submit" class="submit-rsvp-btn">Send RSVP 💕</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RSVP Success Toast -->
+    <div class="toast" id="rsvp-toast">
+        <span class="toast-icon">✅</span>
+        <span class="toast-message" id="toast-message">RSVP sent successfully!</span>
+    </div>
+
+    <!-- Deity Blessing Toast -->
+    <div class="deity-toast" id="deity-toast">
+        <span class="deity-toast-icon" id="deity-toast-icon">🕉️</span>
+        <p class="deity-toast-text" id="deity-toast-text"></p>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="site-url.local.js" onerror="void 0"></script>
+    <script src="script.js"></script>
+</body>
+</html>
