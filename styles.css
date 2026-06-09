@@ -53,6 +53,7 @@ section[id] {
     --font-serif: Georgia, 'Times New Roman', 'Palatino Linotype', serif;
     --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --font-mono: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+    --font-devanagari: 'Tiro Devanagari Sanskrit', 'Noto Serif Devanagari', 'Kohinoor Devanagari', serif;
 }
 
 body {
@@ -516,10 +517,11 @@ body.mode-developer #dna-canvas {
 }
 
 .portal-om {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
+    font-family: var(--font-devanagari);
+    font-size: 1.65rem;
     color: var(--gold);
     margin-bottom: 0.75rem;
+    line-height: 1.4;
 }
 
 .portal-names {
@@ -637,6 +639,145 @@ body.has-portal .skip-loader {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+}
+
+/* Ganesha beat — after portal opens */
+.ganesha-beat {
+    position: fixed;
+    inset: 0;
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: radial-gradient(circle at center, rgba(92, 15, 40, 0.94) 0%, rgba(26, 6, 16, 0.98) 100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+    pointer-events: none;
+}
+
+.ganesha-beat.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ganesha-beat.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.ganesha-beat.hidden {
+    display: none !important;
+}
+
+.ganesha-beat-glow {
+    position: absolute;
+    width: min(85vw, 380px);
+    height: min(85vw, 380px);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 68%);
+    animation: ganeshaBeatGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes ganeshaBeatGlow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+}
+
+.ganesha-beat-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 34ch;
+    text-align: center;
+}
+
+.ganesha-beat-img {
+    width: 88px;
+    height: 88px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    box-shadow: 0 0 28px var(--glow-gold);
+    margin: 0 auto 1.1rem;
+    animation: ganeshaBeatPop 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ganesha-beat-shloka {
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+    font-weight: 600;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 24px rgba(212, 175, 55, 0.35);
+}
+
+.ganesha-beat-mantra {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.ganesha-beat-mantra .mantra-line {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 4.2vw, 1.2rem);
+    font-weight: 500;
+    color: rgba(255, 240, 232, 0.92);
+    line-height: 1.65;
+    margin-bottom: 0.35rem;
+}
+
+.ganesha-beat .pop-line {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+}
+
+.ganesha-beat.visible .pop-line {
+    animation: linePopIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.ganesha-beat.visible .ganesha-beat-shloka {
+    animation-delay: 0.05s;
+}
+
+.ganesha-beat.visible .mantra-line:nth-child(1) {
+    animation-delay: 0.35s;
+}
+
+.ganesha-beat.visible .mantra-line:nth-child(2) {
+    animation-delay: 0.65s;
+}
+
+.ganesha-beat-shubh {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    font-weight: 600;
+    color: var(--gold);
+    margin: 1.25rem 0 0;
+    text-shadow: 0 0 28px rgba(212, 175, 55, 0.4);
+}
+
+.ganesha-beat.visible .ganesha-beat-shubh {
+    animation-delay: 0.95s;
+}
+
+@keyframes ganeshaBeatPop {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes linePopIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.92); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ganesha-beat.fade-out .ganesha-beat-inner {
+    animation: ganeshaBeatOut 0.45s ease forwards;
+}
+
+@keyframes ganeshaBeatOut {
+    to { opacity: 0; transform: scale(1.03) translateY(-8px); }
 }
 
 /* Invitation loader */
@@ -1344,12 +1485,13 @@ body.loader-active {
 }
 
 .om-symbol-main {
+    font-family: var(--font-devanagari);
     font-size: 5rem;
     color: var(--gold);
     text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9), 0 0 24px rgba(212, 175, 55, 0.5);
     animation: pulse 3s infinite;
     margin-bottom: 16px;
-    line-height: 1;
+    line-height: 1.15;
 }
 
 .ganesha-image-container {
@@ -3323,6 +3465,9 @@ footer {
     .invitation-loader {
         transition: opacity 0.2s ease;
     }
+
+    .ganesha-beat { transition-duration: 0.01ms !important; }
+    .ganesha-beat .pop-line { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -3473,10 +3618,12 @@ footer {
 }
 
 .om-small {
+    font-family: var(--font-devanagari);
     font-size: 2rem;
     color: var(--accent-color);
     margin: 20px 0;
     animation: pulse 2s infinite;
+    line-height: 1.2;
 }
 
 .hindi-blessing {

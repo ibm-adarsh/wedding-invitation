@@ -19,7 +19,10 @@
 
     <link rel="icon" href="assets/ganesha.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="assets/ganesha.jpg">
-    <link rel="stylesheet" href="styles.css?v=portal-2026">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=devanagari-om">
     <script src="site-url.js"></script>
     <script src="wedding-data.js?v=portal-2026"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -89,13 +92,25 @@
         </div>
     </div>
 
+    <div id="ganeshaBeat" class="ganesha-beat hidden" aria-live="polite">
+        <div class="ganesha-beat-glow" aria-hidden="true"></div>
+        <div class="ganesha-beat-inner">
+            <img src="assets/ganesha.jpg" alt="" class="ganesha-beat-img" width="88" height="88">
+            <p class="ganesha-beat-shloka pop-line">॥ श्री गणेशाय नमः ॥</p>
+            <blockquote class="ganesha-beat-mantra">
+                <span class="pop-line mantra-line">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।</span>
+                <span class="pop-line mantra-line">निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</span>
+            </blockquote>
+            <p class="ganesha-beat-shubh pop-line">शुभ विवाह</p>
+        </div>
+    </div>
+
     <!-- Elegant Opening -->
     <div id="invitation-loader" class="invitation-loader loader-behind-portal">
         <img src="assets/ganesha.jpg" alt="Lord Ganesha" class="loader-ganesha">
         <div class="loader-diyas">
             <span>🪔</span><span>🪔</span><span>🪔</span>
         </div>
-        <p class="loader-text">शुभ विवाह</p>
         <p class="loader-sub">Tap below to begin your invitation</p>
         <button type="button" class="loader-open-music" id="open-invitation-music" disabled aria-live="polite">
             Preparing music…
@@ -729,6 +744,6 @@
     </div>
 
     <script src="site-url.local.js" onerror="void 0"></script>
-    <script src="script.js?v=portal-2026"></script>
+    <script src="script.js?v=shubh-on-beat"></script>
 </body>
 </html>

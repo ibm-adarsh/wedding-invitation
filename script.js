@@ -20,22 +20,40 @@ const isCoarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').ma
 // ============================================
 let portalDone = false;
 
+function showGaneshaBeat() {
+    const beat = document.getElementById('ganeshaBeat');
+    if (!beat) return;
+    beat.classList.remove('hidden', 'fade-out');
+    void beat.offsetWidth;
+    beat.classList.add('visible');
+}
+
+function hideGaneshaBeat(done) {
+    const beat = document.getElementById('ganeshaBeat');
+    if (!beat) {
+        if (done) done();
+        return;
+    }
+    beat.classList.remove('visible');
+    beat.classList.add('fade-out');
+    const fadeMs = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 50 : 450;
+    setTimeout(() => {
+        beat.classList.remove('fade-out');
+        beat.classList.add('hidden');
+        if (done) done();
+    }, fadeMs);
+}
+
 function initPortal() {
     const stage = document.getElementById('curtainStage');
     const btn = document.getElementById('portalOpenBtn');
     const loader = document.getElementById('invitation-loader');
     if (!stage || !btn || !loader) return;
 
-    const PORTAL_HIDE_MS = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 240 : 1900;
-    const LOADER_HOLD_MS = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 450 : 1200;
-
-    function revealLoaderThenOpen() {
-        loader.classList.remove('loader-behind-portal');
-        loader.classList.add('loader-reveal');
-        setTimeout(() => {
-            finishLoader({ withMusic: false });
-        }, LOADER_HOLD_MS);
-    }
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const PORTAL_HIDE_MS = reduced ? 240 : 1900;
+    const GANESHA_SHOW_MS = reduced ? 80 : 1100;
+    const GANESHA_HOLD_MS = reduced ? 700 : 2800;
 
     function openPortal(fromGesture) {
         if (portalDone) return;
@@ -52,12 +70,16 @@ function initPortal() {
 
         setTimeout(() => {
             stage.classList.add('done');
-        }, PORTAL_HIDE_MS * 0.55);
+            showGaneshaBeat();
+        }, GANESHA_SHOW_MS);
 
         setTimeout(() => {
             stage.style.display = 'none';
-            revealLoaderThenOpen();
         }, PORTAL_HIDE_MS);
+
+        setTimeout(() => {
+            hideGaneshaBeat(() => finishLoader({ withMusic: false }));
+        }, GANESHA_SHOW_MS + GANESHA_HOLD_MS);
     }
 
     btn.addEventListener('click', (e) => {
