@@ -19,8 +19,9 @@
 
     <link rel="icon" href="assets/ganesha.jpg" type="image/jpeg">
     <link rel="apple-touch-icon" href="assets/ganesha.jpg">
-    <link rel="stylesheet" href="styles.css?v=royal">
+    <link rel="stylesheet" href="styles.css?v=portal-2026">
     <script src="site-url.js"></script>
+    <script src="wedding-data.js?v=portal-2026"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         (function () {
@@ -35,7 +36,7 @@
         })();
     </script>
 </head>
-<body class="mode-classic" data-mode="classic">
+<body class="mode-classic has-portal" data-mode="classic">
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scroll-progress"></div>
 
@@ -69,8 +70,27 @@
     <!-- Hindu Ritual Background (subtle floating elements) -->
     <div class="ritual-background" id="ritual-background"></div>
 
+    <!-- Portal curtain -->
+    <div id="curtainStage" class="portal-stage">
+        <div class="portal-backdrop" aria-hidden="true"></div>
+        <div class="portal-panel portal-panel-left" aria-hidden="true"></div>
+        <div class="portal-panel portal-panel-right" aria-hidden="true"></div>
+        <div class="portal-focus">
+            <div class="portal-focus-bg" aria-hidden="true"></div>
+            <div class="portal-ring" aria-hidden="true"></div>
+            <div class="portal-center">
+                <p class="portal-om">॥ ॐ ॥</p>
+                <h2 class="portal-names">Anjali <span class="portal-heart couple-heart-pop" aria-hidden="true">❤</span> Adarsh</h2>
+                <p class="portal-sub">A Wedding Celebration</p>
+            </div>
+            <button type="button" id="portalOpenBtn" class="portal-open-btn" aria-label="Please click here to open your Invitation">
+                <span class="portal-open-main">Please click here to open your Invitation</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Elegant Opening -->
-    <div id="invitation-loader" class="invitation-loader">
+    <div id="invitation-loader" class="invitation-loader loader-behind-portal">
         <img src="assets/ganesha.jpg" alt="Lord Ganesha" class="loader-ganesha">
         <div class="loader-diyas">
             <span>🪔</span><span>🪔</span><span>🪔</span>
@@ -709,6 +729,6 @@
     </div>
 
     <script src="site-url.local.js" onerror="void 0"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=portal-2026"></script>
 </body>
 </html>

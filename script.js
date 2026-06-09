@@ -18,6 +18,66 @@ const isCoarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').ma
 // ============================================
 // INVITATION OPENING
 // ============================================
+let portalDone = false;
+
+function initPortal() {
+    const stage = document.getElementById('curtainStage');
+    const btn = document.getElementById('portalOpenBtn');
+    const loader = document.getElementById('invitation-loader');
+    if (!stage || !btn || !loader) return;
+
+    const PORTAL_HIDE_MS = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 240 : 1900;
+    const LOADER_HOLD_MS = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 450 : 1200;
+
+    function revealLoaderThenOpen() {
+        loader.classList.remove('loader-behind-portal');
+        loader.classList.add('loader-reveal');
+        setTimeout(() => {
+            finishLoader({ withMusic: false });
+        }, LOADER_HOLD_MS);
+    }
+
+    function openPortal(fromGesture) {
+        if (portalDone) return;
+        portalDone = true;
+
+        if (fromGesture) {
+            playMusicFromUserGesture();
+            startBackgroundMusic(true);
+        }
+
+        btn.disabled = true;
+        btn.classList.add('is-opening');
+        stage.classList.add('opening', 'opened');
+
+        setTimeout(() => {
+            stage.classList.add('done');
+        }, PORTAL_HIDE_MS * 0.55);
+
+        setTimeout(() => {
+            stage.style.display = 'none';
+            revealLoaderThenOpen();
+        }, PORTAL_HIDE_MS);
+    }
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openPortal(true);
+    });
+
+    btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openPortal(true);
+        }
+    });
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        openPortal(false);
+    }
+}
+
 if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
 }
@@ -99,6 +159,7 @@ document.getElementById('skip-loader')?.addEventListener('click', openInvitation
 document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loader-active');
     resetPageScroll();
+    initPortal();
     initGlobalHeartClicks();
     updateLoaderMusicButton();
     if (window.YT?.Player) initYouTubePlayer();

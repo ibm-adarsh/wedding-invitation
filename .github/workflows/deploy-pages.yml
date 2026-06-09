@@ -27,7 +27,7 @@ jobs:
       - name: Build static site bundle
         run: |
           mkdir -p _site
-          cp index.html styles.css script.js site-url.js 404.html .nojekyll _site/
+          cp index.html styles.css script.js site-url.js wedding-data.js 404.html .nojekyll _site/
           cp -r assets _site/
           if [ -f site-url.local.js ]; then
             cp site-url.local.js _site/
