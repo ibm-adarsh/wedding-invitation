@@ -29,11 +29,14 @@ jobs:
           mkdir -p _site
           cp index.html styles.css script.js site-url.js wedding-data.js 404.html .nojekyll _site/
           cp -r assets _site/
+          # Second invitation (Singh Family) — live at /singh/ without changing the root site
+          cp -r singh _site/
           if [ -f site-url.local.js ]; then
             cp site-url.local.js _site/
           fi
           test -f _site/index.html
           test -f _site/assets/ganesha.jpg
+          test -f _site/singh/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
